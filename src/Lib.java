@@ -1,4 +1,4 @@
-import java.awt.Polygon;
+import java.awt.*;
 import java.util.Random;
 
 public class Lib {
@@ -10,6 +10,8 @@ public class Lib {
     public static CellFiller DEFAULT_FILLER_NO_STATES = new CellFiller();
     public static CellFiller DEFAULT_FILLER_SUPERPOSITION = new CellFiller();
 
+    public static final Color DEFAULT_SHAPE_FILL_COLOR = Color.white;
+    public static final Color DEFAULT_SHAPE_DRAW_COLOR = Color.black;
 
     public Polygon translatePolygon(Polygon inPoly){
         // we need to add 50 to our points so it's 0-100

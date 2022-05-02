@@ -44,14 +44,36 @@ class Cell extends Rectangle {
     void paintCellStateBgOverride(Graphics g, Point mousePos){
         // TODO fetch colour from CellFiller, then attempt to paint if not empty
         //      also change the color reference to override
+        Optional<Color> bgOverride = cellState.getPaintableFiller().getPaintableBgOverrideColor();
     }
 
     // handle CellFiller Polygons
     void paintCellStatePolygons(Graphics g, Point mousePos){
         // TODO : asks for polygons, then has them painted
+        // get our polygons
         Optional<List<Polygon>> polyList = cellState.getPaintableFiller().getPaintablePolygons(x,y,size,size);
+        // get our fill color
+        Optional<Color> fillColor = cellState.getPaintableFiller().getPaintableFillColor();
+        // get our draw color
+        Optional<Color> drawColor = cellState.getPaintableFiller().getPaintableDrawColor();
         // check if it's good
+        if(polyList.isPresent()){
+            for (Polygon poly: polyList.get()) {
+                // set our fill color
+                if(fillColor.isPresent())
+                    g.setColor(fillColor.get());
+                else
+                    g.setColor(Lib.DEFAULT_SHAPE_FILL_COLOR);
+                // fill the fill
+                g.fillPolygon(poly);
+                // set our draw color
+                if(drawColor.isPresent())
+                    g.setColor(drawColor.get());
+                else
+                    g.setColor(Lib.DEFAULT_SHAPE_DRAW_COLOR);
 
+            }
+        }
 
     }
     // handle base outline

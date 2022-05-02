@@ -1,3 +1,4 @@
+import javax.swing.text.html.Option;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +12,17 @@ public class CellFiller {
     // list of shapes for our CellFiller
     List<Shape> shapeList;
     // filler for this
-    Color bgFill;
+    Optional<Color> overrideFill;
+    Optional<Color> shapeFillColor;
+    Optional<Color> shapeDrawColor;
 
     // constructor
     public CellFiller(){
         // TODO
+        shapeList = new ArrayList<>();
+        overrideFill = Optional.empty();
+        shapeFillColor = Optional.empty();
+        shapeDrawColor = Optional.empty();
     }
 
 
@@ -25,7 +32,7 @@ public class CellFiller {
      * @param y : canvas y of cell
      * @param width : width of cell
      * @param height : height of cell
-     * @return
+     * @return list of paintable polygons, adhering to our constraints
      */
     public Optional<List<Polygon>> getPaintablePolygons(int x, int y, int width, int height){
         // handle no shapes
@@ -40,5 +47,27 @@ public class CellFiller {
         return Optional.of(outList);
     }
 
+    /**
+     * placeholder cell fill override color getter
+     * @return overrideFill optional
+     */
+    public Optional<Color> getPaintableBgOverrideColor() {
+        return overrideFill;
+    }
 
+    /**
+     * placeholder fill color getter
+     * @return shapeFillColor optional
+     */
+    public Optional<Color> getPaintableFillColor() {
+        return shapeFillColor;
+    }
+
+    /**
+     * placeholder draw color getter
+     * @return shapeDrawColor optional
+     */
+    public Optional<Color> getPaintableDrawColor() {
+        return shapeDrawColor;
+    }
 }
