@@ -144,4 +144,8 @@ class Grid implements Iterable<Cell> {
         }
         return retval;
     }
+
+    //TODO: add in {{GridBuilder}}
+    //          needs to be able to {{doCollapse()}}
+    //          hands off to each cells TileState through
 }

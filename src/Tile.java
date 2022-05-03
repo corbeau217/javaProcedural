@@ -13,6 +13,8 @@ public class Tile {
     // TODO : list of shape colors
     Color[] colorList;
 
+    //TODO : add {{tileRules}} "stores info about adjacency options"
+
     // filler for this
     Color overrideFill;
     Color shapeFillColor;

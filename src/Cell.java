@@ -97,4 +97,6 @@ class Cell extends Rectangle {
     public String toString() {
         return Character.toString(col) + Integer.toString(row) + ":" + description;
     }
+
+    //TODO: maybe add in a {{procedureUpdate()}} here that hands off to {{tileState}}
 }
