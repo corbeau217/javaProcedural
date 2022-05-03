@@ -20,6 +20,10 @@ public class Shape {
         points.add(p);
     }
 
+    public void remPoint(Point p){
+        return; //TODO: thonk
+    }
+
     /**
      * convert the shape to a usable polygon
      * @param x the x position on canvas

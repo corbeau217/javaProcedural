@@ -23,7 +23,7 @@ class Grid implements Iterable<Cell> {
 
     Cell[][] cells = new Cell[colCount][rowCount];
 
-    public Grid() {
+    protected Grid() {
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 char c = colToLabel(i);
@@ -32,6 +32,13 @@ class Grid implements Iterable<Cell> {
                 cells[i][j] = new Cell(c, j, x, y);
             }
         }
+    }
+
+    protected static Grid uniqueGrid; // singleton grid reference
+    public static Grid getInstance() {
+        if(Grid.uniqueGrid == null)
+            Grid.uniqueGrid = new Grid();
+        return Grid.uniqueGrid;
     }
 
     private char colToLabel(int col) {

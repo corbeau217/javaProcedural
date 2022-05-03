@@ -9,8 +9,15 @@ class Stage {
     Grid grid;
 
     Stage() {
-        grid = new Grid();
-        System.out.println("Using seed: "+Lib.seed.hashCode());
+        // get our grid instance
+        grid = Grid.getInstance();
+
+        // construct Lib
+        Lib.libMain();
+
+        // proclaim our seed
+        System.out.println("Using seed: "+Lib.getSeed());
+
     }
 
     void paint(Graphics g, Point mouseLoc) {

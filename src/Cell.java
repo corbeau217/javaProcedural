@@ -1,13 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-
+import java.awt.*;
 
 
 class Cell extends Rectangle {
@@ -20,7 +11,7 @@ class Cell extends Rectangle {
     protected String description;
 
     // procedural handler stuffs
-    protected State cellState;
+    protected TileState tileState;
 
     public Cell(char inCol, int inRow, int inX, int inY) {
         super(inX, inY, size, size);
@@ -40,35 +31,28 @@ class Cell extends Rectangle {
         g.fillRect(x, y, size, size);
     }
 
-    // handle CellFiller background override
-    void paintCellStateBgOverride(Graphics g, Point mousePos){
-        // TODO fetch colour from CellFiller, then attempt to paint if not empty
-        //      also change the color reference to override
-        Optional<Color> bgOverride = cellState.getPaintableFiller().getPaintableBgOverrideColor();
-    }
-
-    // handle CellFiller Polygons
+    // handle Tile Polygons
     void paintCellStatePolygons(Graphics g, Point mousePos){
         // TODO : asks for polygons, then has them painted
         // get our polygons
-        Optional<List<Polygon>> polyList = cellState.getPaintableFiller().getPaintablePolygons(x,y,size,size);
+        Polygon[] polyList = tileState.getPaintableFiller().getPaintablePolygons(x,y,size,size);
         // get our fill color
-        Optional<Color> fillColor = cellState.getPaintableFiller().getPaintableFillColor();
+        Color fillColor = tileState.getPaintableFiller().getPaintableFillColor();
         // get our draw color
-        Optional<Color> drawColor = cellState.getPaintableFiller().getPaintableDrawColor();
+        Color drawColor = tileState.getPaintableFiller().getPaintableDrawColor();
         // check if it's good
-        if(polyList.isPresent()){
-            for (Polygon poly: polyList.get()) {
+        if(polyList != null){
+            for (int i = 0; i < polyList.length; i++) { //Polygon poly: polyList.get()
                 // set our fill color
-                if(fillColor.isPresent())
-                    g.setColor(fillColor.get());
+                if(fillColor!=Lib.ERROR_COLOR)
+                    g.setColor(fillColor);
                 else
                     g.setColor(Lib.DEFAULT_SHAPE_FILL_COLOR);
                 // fill the fill
-                g.fillPolygon(poly);
+                g.fillPolygon(polyList[i]);
                 // set our draw color
-                if(drawColor.isPresent())
-                    g.setColor(drawColor.get());
+                if(drawColor!=Lib.ERROR_COLOR)
+                    g.setColor(drawColor);
                 else
                     g.setColor(Lib.DEFAULT_SHAPE_DRAW_COLOR);
 
@@ -85,10 +69,7 @@ class Cell extends Rectangle {
         // handle cell background
         paintBackground(g,mousePos);
 
-        // handle CellFiller background override
-        paintCellStateBgOverride(g,mousePos);
-
-        // handle CellFiller Polygons
+        // handle Tile Polygons
         paintCellStatePolygons(g,mousePos);
 
         // now draw outline
