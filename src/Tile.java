@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,12 @@ public class Tile {
     Color[] colorList;
 
     //TODO : add {{tileRules}} "stores info about adjacency options"
+
+    /**
+     * first index is position starting above and going clockwise around
+     *      second index is the tiles that are allowed
+     */
+    boolean[][] allowedAdjacency;
 
     // filler for this
     Color overrideFill;
@@ -30,8 +37,17 @@ public class Tile {
         overrideFill = Lib.ERROR_COLOR;
         shapeFillColor = Lib.ERROR_COLOR;
         shapeDrawColor = Lib.ERROR_COLOR;
+        // 8 being the number of directions
+        allowedAdjacency = new boolean[8][Lib.TILE_COUNT];
+        Arrays.fill(allowedAdjacency,true);
     }
 
+    public void addAllowedAdjacency(Tile tile){
+        //TODO: have index based overload method as well
+    }
+    public void remAllowedAdjacency(Tile tile){
+        //TODO: have index based overload method as well
+    }
 
     /**
      * gets our list of paintable polygons

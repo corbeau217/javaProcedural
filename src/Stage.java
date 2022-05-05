@@ -9,7 +9,10 @@ class Stage {
     Grid grid;
 
     Stage() {
-        // get our grid instance
+        // get our grid to be built
+        GridBuilder.buildGrid();
+
+        // then get our grid instance
         grid = Grid.getInstance();
 
         // construct Lib

@@ -145,7 +145,48 @@ class Grid implements Iterable<Cell> {
         return retval;
     }
 
-    //TODO: add in {{GridBuilder}}
-    //          needs to be able to {{doCollapse()}}
-    //          hands off to each cells TileState through
+
+    /**
+     * @param dirIdx : ajacent array direction index
+     * @return x idx change
+     */
+    public static int dirX(int dirIdx){
+        switch(dirIdx){
+            case 0:
+            case 4:
+            default:
+                return 0;
+            case 1:
+            case 2:
+            case 3:
+                return 1;
+            case 5:
+            case 6:
+            case 7:
+                return -1;
+        }
+    }
+
+    /**
+     * @param dirIdx : ajacent array direction index
+     * @return y idx change
+     */
+    public static int dirY(int dirIdx){
+        switch(dirIdx){
+            case 0:
+            case 1:
+            case 7:
+                return -1;
+            case 2:
+            case 6:
+            default:
+                return 0;
+            case 3:
+            case 4:
+            case 5:
+                return 1;
+        }
+    }
+
+
 }
