@@ -38,7 +38,6 @@ public class Tile {
 
     // constructor
     public Tile(){
-        // TODO
         shapeList = new Shape[MAX_SHAPES];
         overrideFill = Lib.ERROR_COLOR;
         shapeFillColor = Lib.ERROR_COLOR;
@@ -48,11 +47,12 @@ public class Tile {
         Arrays.fill(allowedAdjacency,true);
     }
 
-    public void addAllowedAdjacency(Tile tile, int dirIdx){
-        //TODO: have index based overload method as well
+
+    public void addAllowedAdjacency(int tileIdx, int dirIdx){
+        allowedAdjacency[dirIdx][tileIdx] = true;
     }
-    public void remAllowedAdjacency(Tile tile, int dirIdx){
-        //TODO: have index based overload method as well
+    public void remAllowedAdjacency(int tileIdx, int dirIdx){
+        allowedAdjacency[dirIdx][tileIdx] = false;
     }
 
     /**
@@ -63,8 +63,15 @@ public class Tile {
      * @return true if there's no rule against it
      */
     public boolean canFaceTileInDirection(int tileIdx, int dirIdx){
-        //TODO
-        return false;
+        return allowedAdjacency[dirIdx][tileIdx];
+    }
+
+
+    /**
+     * tile painter called by Grid/Cell
+     */
+    public void paint(Graphics g, int x, int y, int width, int height){
+        // TODO : handle painting the tile
     }
 
     /**
@@ -100,4 +107,6 @@ public class Tile {
     public Color getPaintableDrawColor() {
         return shapeDrawColor;
     }
+
+
 }

@@ -8,21 +8,6 @@ import java.util.Arrays;
  *          allow for concurrent or more streamline approaches to this problem.
  */
 public class GridBuilder {
-//    // local reference to our grid bc
-//    //      i dont wanna type the whole thing
-//    Grid grid;
-//
-//    // singleton reference to our gridBuilder?
-//
-//
-//    // -------------------------------------------
-//    // this handles a tick of collapsing a grid cell
-//    public static void doCollapse(){
-//        // TODO : hand off to each cells {{TileState}}
-//    }
-//    // -------------------------------------------
-
-
 
     /*
      * have:
@@ -91,35 +76,34 @@ public class GridBuilder {
 
         // loop while we have entropy
         while(hasSuperpositions()){
-            // TODO : move things into here
+            // now we want a list of cells with that level of entropy
+            TileNode[] lowestEntropyNodes = getLowestEntropyList();
+
+            // now pick a node to collapse
+            int collapsingIndex;
+            collapsingIndex = Lib.seed.nextInt( lowestEntropyNodes.length+1);
+
+            // now collapse it
+            lowestEntropyNodes[collapsingIndex].collapse();
+
+            // get the x and y in abstractGrid of our collapsed node
+            int collapsedX = getIndexX(lowestEntropyNodes[collapsingIndex]);
+            int collapsedY = getIndexY(lowestEntropyNodes[collapsingIndex]);
+
+            // use it to get adjacency array for that node
+            TileNode[] adjacencyArray = getAdjacencyArray(collapsedX, collapsedY);
+
+            // loop through and propagate change, need to remove anything that
+            //      doesnt like the collapsed tile next to it
+            for(int i = 0; i < adjacencyArray.length; i++){
+                // start at the bottom, then orbit collapsed cell
+                TileNode currNode = adjacencyArray[(4+i)%8];
+                // checks what it can look at (starting looking up and orbiting clockwise)
+                if(currNode!=null) currNode.updateTileOptionsFacingTile(collapsingIndex,i);
+            }
+
+            // now loop back to where we checked if there were still superpositions
         }
-        // now we want a list of cells with that level of entropy
-        TileNode[] lowestEntropyNodes = getLowestEntropyList();
-
-        // now pick a node to collapse
-        int collapsingIndex;
-        collapsingIndex = Lib.seed.nextInt( lowestEntropyNodes.length+1);
-
-        // now collapse it
-        lowestEntropyNodes[collapsingIndex].collapse();
-
-        // get the x and y in abstractGrid of our collapsed node
-        int collapsedX = getIndexX(lowestEntropyNodes[collapsingIndex]);
-        int collapsedY = getIndexY(lowestEntropyNodes[collapsingIndex]);
-
-        // use it to get adjacency array for that node
-        TileNode[] adjacencyArray = getAdjacencyArray(collapsedX, collapsedY);
-
-        // loop through and propagate change, need to remove anything that
-        //      doesnt like the collapsed tile next to it
-        for(int i = 0; i < adjacencyArray.length; i++){
-            // start at the bottom, then orbit collapsed cell
-            TileNode currNode = adjacencyArray[(4+i)%8];
-            // checks what it can look at (starting looking up and orbiting clockwise)
-            if(currNode!=null) currNode.updateTileOptionsFacingTile(collapsingIndex,i);
-        }
-
-        // now loop back to where we checked if there were still superpositions
 
         // ----------------
 

@@ -184,9 +184,4 @@ public class TileState {
         return Lib.TILE_OPTIONS[this.currTileIdx];
     }
 
-    //TODO: add handles for adhering to nearby adjacency rules for propagation
-
-    //TODO: add in {{refreshTileState()}} || {{updateTileState()}} || {{doUpdate()}}
-    //          might need to have parameter for what the location is or a reference
-    //          to the cell this {{TileState}} is for
 }
