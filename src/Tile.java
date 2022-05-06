@@ -22,12 +22,9 @@ public class Tile {
      *          length: 8, 0 is up, goes clockwise
      *      [B] - is allowed next to tile index
      *          length: Lib.TILE_COUNT, matches each allowable tile
-     */
-    boolean[][] allowedAdjacentTo;
-
-    /**
-     * first index is position starting above and going clockwise around
-     *      second index is the tiles that are allowed
+     *
+     * *** need to be wary of keeping options that majority of tiles can be next to ***
+     * *** as may end up deadlocking if we have too strict rules for our adjacency
      */
     boolean[][] allowedAdjacency;
 
@@ -51,11 +48,23 @@ public class Tile {
         Arrays.fill(allowedAdjacency,true);
     }
 
-    public void addAllowedAdjacency(Tile tile){
+    public void addAllowedAdjacency(Tile tile, int dirIdx){
         //TODO: have index based overload method as well
     }
-    public void remAllowedAdjacency(Tile tile){
+    public void remAllowedAdjacency(Tile tile, int dirIdx){
         //TODO: have index based overload method as well
+    }
+
+    /**
+     * check if this Tile is allowed to face Lib.TILE_OPTIONS[tileIdx]
+     *      in direction index dirIdx
+     * @param tileIdx : the tile index in Lib.TILE_OPTIONS
+     * @param dirIdx : the direction index where 0 is up, going clockwise
+     * @return true if there's no rule against it
+     */
+    public boolean canFaceTileInDirection(int tileIdx, int dirIdx){
+        //TODO
+        return false;
     }
 
     /**

@@ -102,14 +102,29 @@ public class GridBuilder {
 
         // now collapse it
         lowestEntropyNodes[collapsingIndex].collapse();
-        // now get adjacency list
+
+        // get the x and y in abstractGrid of our collapsed node
         int collapsedX = getIndexX(lowestEntropyNodes[collapsingIndex]);
         int collapsedY = getIndexY(lowestEntropyNodes[collapsingIndex]);
+
+        // use it to get adjacency array for that node
         TileNode[] adjacencyArray = getAdjacencyArray(collapsedX, collapsedY);
+
         // loop through and propagate change, need to remove anything that
-        // doesnt like the collapsed tile next to it
-            //TODO: add in the code for progatation here
-        // now we pick random lowest choices, then update options and repeat
+        //      doesnt like the collapsed tile next to it
+        for(int i = 0; i < adjacencyArray.length; i++){
+            // start at the bottom, then orbit collapsed cell
+            TileNode currNode = adjacencyArray[(4+i)%8];
+            // checks what it can look at (starting looking up and orbiting clockwise)
+            if(currNode!=null) currNode.updateTileOptionsFacingTile(collapsingIndex,i);
+        }
+
+        // now loop back to where we checked if there were still superpositions
+
+        // ----------------
+
+        // looping through grid should be ended, we need to make int[][] table to
+        //      return and use for building grid
 
         return null;
     }
@@ -315,6 +330,31 @@ public class GridBuilder {
                 return this.optionsCount;
             else
                 return FILLED_ENTROPY;
+        }
+
+        /**
+         * this ammends the TileNode tileOptions so that any tiles this
+         *      node cant be are removed from the pool
+         * @param tileIdx : index of the tile in Lib.TILE_OPTIONS that is
+         *                  in dirIdx direction
+         * @param dirIdx : direction index of the cell that was collapsed
+         *                  with 0 as up, and going clockwise
+         */
+        public void updateTileOptionsFacingTile(int tileIdx, int dirIdx){
+            // loop through our tileOptions and check the current
+            //      options for still being valid facing dirIdx with tileIdx
+            //
+            // also stop if optionsCount == 1
+            for(int currIdx = 0; currIdx < Lib.TILE_COUNT || optionsCount > 1; currIdx++){
+                if(tileOptions[currIdx]){
+                    // not already cancelled so investigate
+                    tileOptions[currIdx] = Lib.TILE_OPTIONS[currIdx].canFaceTileInDirection(tileIdx,dirIdx);
+                    if(!tileOptions[currIdx]){
+                        // we just found something that cant be, so ammend our count
+                        optionsCount--;
+                    }
+                }
+            }
         }
     }
 }
