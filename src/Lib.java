@@ -24,6 +24,10 @@ public class Lib {
     // this is filled with the possible tiles this cell can take
     protected static Tile[] TILE_OPTIONS = new Tile[Lib.TILE_COUNT];
 
+    // this will be the index of our error tile, have it as 0 until
+    //      since it's easier
+    protected static int ERROR_TILE_IDX = 0;
+
     // --------------------------------------------------
     // --------------------------------------------------
     // ----- Lib methods after here
@@ -43,7 +47,7 @@ public class Lib {
         int idx = 0;
         Shape temp;
 
-        //
+        // TODO : add code to setup our tiles
     }
 
     /**

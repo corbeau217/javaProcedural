@@ -293,7 +293,10 @@ public class GridBuilder {
     static class TileNode{
         // TODO : implement as after collapsing a TileNode,
         //          entropy is set to less than 1
-        public static final int FILLED_ENTROPY = 0;
+        //          (need to check as this was a toss up between
+        //              0 and 1 for a while so some code about
+        //              this might be bricked)
+        public static final int FILLED_ENTROPY = -1;
         int val;
 
         boolean[] tileOptions;
@@ -303,8 +306,8 @@ public class GridBuilder {
         public TileNode(){
             // set our optionsCount
             optionsCount = Lib.TILE_COUNT;
-            // give ourselves the entropy measure
-            val = optionsCount*-1;
+            // give ourselves empty val
+            val = -1;
             // setup options array
             tileOptions = new boolean[optionsCount];
             Arrays.fill(tileOptions, true);
@@ -316,8 +319,53 @@ public class GridBuilder {
          * after a TileNode is collapsed, optionsCount = FILLED_ENTROPY
          */
         public void collapse(){
-            //TODO : this will collapse the current instance to one
-            //          of the available options
+            // to avoid repeated code, have them fetch the resulting
+            //      index in their respective ways, than handle that
+            // default to error tile idx for debugging
+            int finalIdx = Lib.ERROR_TILE_IDX;
+
+            // check for 1 options
+            if(this.optionsCount==1){
+                // loop over our options
+                for(int idx = 0; idx < Lib.TILE_COUNT; idx++){
+                    if(tileOptions[idx]){
+                        // we have our option, set it to be
+                        finalIdx = idx;
+                    }
+                }
+            }
+            else { // right now else, tomorrow another if
+                // get a random k
+                int randomK = Lib.seed.nextInt(this.optionsCount+1);
+                // loop over tiles, keep track of positives to
+                //      find the right one
+                for(int idx = 0, k = 0; idx < Lib.TILE_COUNT; idx++){
+                    if(tileOptions[idx]){
+                        // got a positive, check k
+                        if(k==randomK){
+                            finalIdx = idx;
+                            break; // done here
+                        }
+                        // ammend k since we havent found
+                        k++;
+                    }
+                }
+            }
+            // now we have index of what we're using, or we have error
+            // TODO LATER : have a handle for if there was an error and we
+            //          end up with no options left, we wipe all adjacent
+            //          tiles and rebuild them so as to avoid the error
+
+            // ---------------------------------
+            // now cleanup our variables
+
+            // empty tileOptions
+            Arrays.fill(tileOptions, false);
+            // empty optionsCount
+            optionsCount = 0;
+            // set val
+            val = finalIdx;
+            // this node is officially collapsed
         }
 
         /**
@@ -345,7 +393,7 @@ public class GridBuilder {
             //      options for still being valid facing dirIdx with tileIdx
             //
             // also stop if optionsCount == 1
-            for(int currIdx = 0; currIdx < Lib.TILE_COUNT || optionsCount > 1; currIdx++){
+            for(int currIdx = 0; currIdx < Lib.TILE_COUNT; currIdx++){
                 if(tileOptions[currIdx]){
                     // not already cancelled so investigate
                     tileOptions[currIdx] = Lib.TILE_OPTIONS[currIdx].canFaceTileInDirection(tileIdx,dirIdx);
@@ -356,5 +404,19 @@ public class GridBuilder {
                 }
             }
         }
+
+        /*
+         * TODO : as per this youtube video - https://www.youtube.com/watch?v=2SuvO4Gi7uY
+         *          need to then iterrate over the ammended adjacent cells, and grab their
+         *          neighbours that havent had their options edited yet, and edit those
+         *          repeating the process expanding out until no cell is needing to
+         *          be updated anymore
+         *
+         *          this might require using lists and lambdas or generics or just
+         *          refactoring the way in which we're handling propagation.
+         *
+         *          see if we can get this working without needing to do this first
+         *          (might result in more work or more errors in placement/collapses)
+         */
     }
 }
