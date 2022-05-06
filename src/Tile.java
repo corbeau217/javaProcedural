@@ -14,7 +14,16 @@ public class Tile {
     // TODO : list of shape colors
     Color[] colorList;
 
-    //TODO : add {{tileRules}} "stores info about adjacency options"
+    /**
+     * the main housing for deciding what a tile can be adjacent to
+     *
+     * allowedAdjacentTo[A][B]:
+     *      [A] - direction from current tile
+     *          length: 8, 0 is up, goes clockwise
+     *      [B] - is allowed next to tile index
+     *          length: Lib.TILE_COUNT, matches each allowable tile
+     */
+    boolean[][] allowedAdjacentTo;
 
     /**
      * first index is position starting above and going clockwise around

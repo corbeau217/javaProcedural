@@ -1,5 +1,15 @@
 import java.util.ArrayList;
 
+
+/**
+ * TODO : DEPRECIATE THIS : REMOVE THIS CLASS FROM THE PROJECT STRUCTURE
+ *                          AS THIS IS NOW HANDLED BY THE GRIDBUILDER CLASS
+ *                              WITH SUBCLASS TILENODE
+ */
+
+
+
+
 /**
  * this class keeps track of the state(s) that the cell can take
  *

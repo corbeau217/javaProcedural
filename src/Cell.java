@@ -1,6 +1,16 @@
 import java.awt.*;
 
-
+/**
+ * code was gutted from COMP2000 code
+ *      TODO: make this unique enough that it's not providing answers to
+ *              course content.
+ *
+ *      TODO: have Cell field for Tile assigned by constructor / Grid after
+ *              GridBuilder is done
+ *
+ *      TODO: remove all usages of TileState and move over to using
+ *              GridBuilder input
+ */
 class Cell extends Rectangle {
     // cell properties
     protected static int size = Grid.cellSize;
