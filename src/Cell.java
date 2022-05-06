@@ -23,6 +23,9 @@ class Cell extends Rectangle {
     // procedural handler stuffs
     protected TileState tileState;
 
+    // tile container
+    protected Tile tile;
+
     public Cell(char inCol, int inRow, int inX, int inY) {
         super(inX, inY, size, size);
         col = inCol;
