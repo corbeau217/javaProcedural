@@ -24,6 +24,7 @@ class Grid implements Iterable<Cell> {
     Cell[][] cells = new Cell[colCount][rowCount];
 
     protected Grid() {
+        // setup the cells
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 char c = colToLabel(i);
@@ -32,6 +33,30 @@ class Grid implements Iterable<Cell> {
                 cells[i][j] = new Cell(c, j, x, y);
             }
         }
+        // get our GridBuilder list of indexes
+        int[][] builtGrid = GridBuilder.buildGrid();
+
+        // make sure we caught a big one
+        if(builtGrid != null){
+            // now run through and attempt to build our grid
+            for (int x = 0; x < cells.length; x++){
+                for(int y = 0; y < cells.length; y++){
+                    // get index from our builtGrid
+                    int idx = builtGrid[x][y];
+
+                    // hand it off to our cell
+                    cells[x][y].setTile(Lib.TILE_OPTIONS[idx]);
+
+                }
+            }
+        }
+        else{
+            // assign all cell.tile to error tile and scream?
+            // TODO : handle when we werent able to build i guess?
+            System.err.println("Failed to build grid, GridBuilder.buildGrid(); returned a null");
+        }
+
+
     }
 
     protected static Grid uniqueGrid; // singleton grid reference
@@ -130,6 +155,7 @@ class Grid implements Iterable<Cell> {
         return new ArrayList<Cell>(inRadius);
     }
 
+    // yucky we barely use this, fix that probably
     @Override
     public CellIterator iterator() {
         return new CellIterator(cells);

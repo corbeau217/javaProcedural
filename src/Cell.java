@@ -5,11 +5,6 @@ import java.awt.*;
  *      TODO: make this unique enough that it's not providing answers to
  *              course content.
  *
- *      TODO: have Cell field for Tile assigned by constructor / Grid after
- *              GridBuilder is done
- *
- *      TODO: remove all usages of TileState and move over to using
- *              GridBuilder input
  */
 class Cell extends Rectangle {
     // cell properties
@@ -17,11 +12,8 @@ class Cell extends Rectangle {
     protected char col;
     protected int row;
     protected final Color DEFAULT_COLOR = new Color(235,235,235);
-    protected Color color;
+    protected Color bgColor;
     protected String description;
-
-    // procedural handler stuffs
-    protected TileState tileState;
 
     // tile container
     protected Tile tile;
@@ -30,63 +22,44 @@ class Cell extends Rectangle {
         super(inX, inY, size, size);
         col = inCol;
         row = inRow;
-        // set the default color
-        color = DEFAULT_COLOR;
+        // set the default bgColor
+        bgColor = DEFAULT_COLOR;
     }
 
     // handle cell background
-    void paintBackground(Graphics g, Point mousePos){
+    void paintCellBackground(Graphics g, Point mousePos){
         if (contains(mousePos)) {
             g.setColor(Color.GRAY);
         } else {
-            g.setColor(color);
+            g.setColor(bgColor);
         }
         g.fillRect(x, y, size, size);
     }
 
     // handle Tile Polygons
-    void paintCellStatePolygons(Graphics g, Point mousePos){
-        // TODO : asks for polygons, then has them painted
-        // get our polygons
-        Polygon[] polyList = tileState.getPaintableFiller().getPaintablePolygons(x,y,size,size);
-        // get our fill color
-        Color fillColor = tileState.getPaintableFiller().getPaintableFillColor();
-        // get our draw color
-        Color drawColor = tileState.getPaintableFiller().getPaintableDrawColor();
-        // check if it's good
-        if(polyList != null){
-            for (int i = 0; i < polyList.length; i++) { //Polygon poly: polyList.get()
-                // set our fill color
-                if(fillColor!=Lib.ERROR_COLOR)
-                    g.setColor(fillColor);
-                else
-                    g.setColor(Lib.DEFAULT_SHAPE_FILL_COLOR);
-                // fill the fill
-                g.fillPolygon(polyList[i]);
-                // set our draw color
-                if(drawColor!=Lib.ERROR_COLOR)
-                    g.setColor(drawColor);
-                else
-                    g.setColor(Lib.DEFAULT_SHAPE_DRAW_COLOR);
-
-            }
+    void paintTile(Graphics g, Point mousePos){
+        // tbh just ignore dead tiles
+        if(tile != null){
+            tile.paint(g,x,y,width,height);
         }
 
     }
     // handle base outline
-    void paintBaseOutline(Graphics g, Point mousePos){
+    void paintCellOutline(Graphics g, Point mousePos){
         g.setColor(Color.BLACK);
         g.drawRect(x, y, size, size);
     }
+
+    // general tile painter method called from Grid class
     void paint(Graphics g, Point mousePos) {
         // handle cell background
-        paintBackground(g,mousePos);
+        paintCellBackground(g,mousePos);
 
         // handle Tile Polygons
-        paintCellStatePolygons(g,mousePos);
+        paintTile(g,mousePos);
 
         // now draw outline
-        paintBaseOutline(g,mousePos);
+        paintCellOutline(g,mousePos);
 
     }
 
@@ -111,5 +84,13 @@ class Cell extends Rectangle {
         return Character.toString(col) + Integer.toString(row) + ":" + description;
     }
 
-
+    /**
+     * TODO : maybe this should be overloaded to take idx when we move
+     *          Lib.TILE_OPTIONS into the Tile class
+     * set tile by tile reference
+     * @param tileIn : reference to the tile
+     */
+    public void setTile(Tile tileIn){
+        tile = tileIn;
+    }
 }
