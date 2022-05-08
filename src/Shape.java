@@ -28,6 +28,9 @@ public class Shape {
         points.add(p);
         return this;
     }
+    public Shape addPoint(int x, int y){
+        return addPoint(new Point(x,y));
+    }
 
     /**
      * ot a builder pattern on it bc noice
@@ -102,4 +105,6 @@ public class Shape {
         this.outline = drawColor;
         return this;
     }
+
+
 }

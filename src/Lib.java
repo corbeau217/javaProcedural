@@ -27,6 +27,8 @@ public class Lib {
     // this will be the index of our error tile, have it as 0 until
     //      since it's easier
     protected static int ERROR_TILE_IDX = 0;
+    // TODO: change this to it's own seperate variable because otherwise
+    //          it might be chosen at random
 
     // --------------------------------------------------
     // --------------------------------------------------
@@ -43,8 +45,6 @@ public class Lib {
      * this sets up our TILE_OPTIONS
      */
     private static void constructTiles() {
-        // setup our tracking variables
-        int idx = 0;
 
         /**
          * TODO: setup our tiles, the Shape class has a
@@ -52,7 +52,16 @@ public class Lib {
          *       to do, just use the Shape.addPoint().addPoint().setOutline()
          *       etc
          */
+        int idx = 0;
         Shape temp;
+
+        // bc we're lazy at making tiles rn
+        for(int i = 0; i < Lib.TILE_COUNT; i++){
+            // set the first shape in every tile to a square so we at least have something
+            Lib.TILE_OPTIONS[i].shapeList[0] = ShapeSpewer.spewSquare();
+        }
+        // set first tile to be the error tile.
+        Lib.TILE_OPTIONS[0].shapeList[0].setFill(Lib.ERROR_COLOR);
 
     }
 
