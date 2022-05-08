@@ -45,9 +45,15 @@ public class Lib {
     private static void constructTiles() {
         // setup our tracking variables
         int idx = 0;
+
+        /**
+         * TODO: setup our tiles, the Shape class has a
+         *       builder pattern so it should be super easy
+         *       to do, just use the Shape.addPoint().addPoint().setOutline()
+         *       etc
+         */
         Shape temp;
 
-        // TODO : add code to setup our tiles
     }
 
     /**
