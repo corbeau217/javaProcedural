@@ -9,6 +9,10 @@ import java.util.Optional;
  *      and also handles the painting of it
  */
 public class Tile {
+    public static String tileInstanceName = "Tile";
+
+    String tileName;
+
     // list of shapes for our Tile
     Shape[] shapeList;
 
@@ -31,30 +35,16 @@ public class Tile {
 
     // constructor
     public Tile(){
+        // setup our shapes with max shape thing
         shapeList = new Shape[MAX_SHAPES];
         // 8 being the number of directions
         allowedAdjacency = new boolean[8][Lib.TILE_COUNT];
-        Arrays.fill(allowedAdjacency,true);
+        // setup a basic shape for handling stuff
+        this.setBasicSquareTile()
+                .setupAdjacency()
+                .setName(Tile.tileInstanceName);
     }
 
-
-    public void addAllowedAdjacency(int tileIdx, int dirIdx){
-        allowedAdjacency[dirIdx][tileIdx] = true;
-    }
-    public void remAllowedAdjacency(int tileIdx, int dirIdx){
-        allowedAdjacency[dirIdx][tileIdx] = false;
-    }
-
-    /**
-     * check if this Tile is allowed to face Lib.TILE_OPTIONS[tileIdx]
-     *      in direction index dirIdx
-     * @param tileIdx : the tile index in Lib.TILE_OPTIONS
-     * @param dirIdx : the direction index where 0 is up, going clockwise
-     * @return true if there's no rule against it
-     */
-    public boolean canFaceTileInDirection(int tileIdx, int dirIdx){
-        return allowedAdjacency[dirIdx][tileIdx];
-    }
 
 
     /**
@@ -65,7 +55,6 @@ public class Tile {
         for(int idx = 0; idx < shapeList.length && shapeList[idx] != null; idx++){
             // get the current poly to draw
             Polygon currPoly = shapeList[idx].convertToPaintablePolygon(x,y,width,height);
-
             // get our shape fill color
             Color currPolyFill = shapeList[idx].getFill();
             // use the Lib.ERROR_COLOR if we have a null color
@@ -85,6 +74,151 @@ public class Tile {
         }
     }
 
+    /**
+     * builder setName
+     * @param inStr : string to set it to
+     * @return reference to this
+     */
+    public Tile setName(String inStr){
+        this.tileName = inStr;
+        return this;
+    }
+    public String getTileName(){
+        return this.tileName;
+    }
 
+
+
+    /*
+     * TODO: REFACTOR ADJACENCY METHODS TO BE NEATER
+     */
+
+    // ADJACENCY METHODS
+
+    public void addAllowedAdjacency(int tileIdx, int dirIdx){
+        allowedAdjacency[dirIdx][tileIdx] = true;
+    }
+    public void remAllowedAdjacency(int tileIdx, int dirIdx){
+        allowedAdjacency[dirIdx][tileIdx] = false;
+    }
+
+    /**
+     * check if this Tile is allowed to face Lib.TILE_OPTIONS[tileIdx]
+     *      in direction index dirIdx
+     * @param tileIdx : the tile index in Lib.TILE_OPTIONS
+     * @param dirIdx : the direction index where 0 is up, going clockwise
+     * @return true if there's no rule against it
+     */
+    public boolean canFaceTileInDirection(int tileIdx, int dirIdx){
+        return allowedAdjacency[dirIdx][tileIdx];
+    }
+
+    protected Tile setupAdjacency(){
+        return this.setCanFaceAnything(true);
+    }
+
+    public Tile setCanFace(int tileIdx, int dirIdx, boolean canFace){
+        if(validTileIndex(tileIdx))
+            this.allowedAdjacency[dirIdx][tileIdx] = canFace;
+        return this;
+    }
+    public Tile setCanFaceAnyDirection(String inTileName, boolean canFace){
+        int tileIdx = Lib.getTileIndex(inTileName);
+        // if we get a -1 index then we dont try to set it, otherwise we do
+        return (validTileIndex(tileIdx)) ? this.setCanFaceAnyDirection(tileIdx,canFace) : this ;
+    }
+    public Tile setCanFaceAnyDirection(String inTileName){
+        return this.setCanFaceAnyDirection(inTileName, true);
+    }
+    public Tile setCanFaceAnyDirection(int tileIdx, boolean canFace){
+        if(!validTileIndex(tileIdx))
+            return this;
+        for(int dirIdx = 0; dirIdx < 8; dirIdx++){
+            this.allowedAdjacency[dirIdx][tileIdx] = canFace;
+        }
+        return this;
+    }
+    public Tile setCanFaceAnyDirection(int tileIdx){
+        return this.setCanFaceAnyDirection(tileIdx,true);
+    }
+    public Tile setCanFaceAnything(boolean canFace){
+        for(int tileIdx = 0; tileIdx < Lib.TILE_COUNT; tileIdx++){
+            this.setCanFaceAnyDirection(tileIdx, canFace);
+        }
+        return this;
+    }
+    public Tile setCanFaceAnything(){
+        return this.setCanFaceAnything(true);
+    }
+    public Tile setCantFaceAnything(){
+        return this.setCanFaceAnything(false);
+    }
+    public Tile setCanOnlyFace(String[] tileNameArr, boolean canFace){
+        this.setCanFaceAnything(!canFace);
+        for (String tileName : tileNameArr) {
+            int tileIdx = Lib.getTileIndex(tileName);
+            // only if our tileIdx is valid
+            if (validTileIndex(tileIdx))
+                this.setCanFaceAnyDirection(tileIdx, canFace);
+            else
+                System.err.println("Failed to 'setCanOnlyFace(String[])' on " + tileName);
+        }
+        return this;
+    }
+    public Tile setCanOnlyFace(String[] tileNameArr){
+        return this.setCanOnlyFace(tileNameArr, true);
+    }
+    public Tile setOnlyCantFace(String[] tileNameArr){
+        return this.setCanOnlyFace(tileNameArr,false);
+    }
+    /**
+     * setCanFaceAnything(false) then loop through the idx array we were
+     *      given and set those to true
+     * @param tileIdxArr : array of indexes we can face still
+     * @return : reference to this
+     */
+    public Tile setCanOnlyFace(int[] tileIdxArr, boolean canFace){
+        this.setCanFaceAnything(false);
+        for (int idx : tileIdxArr) {
+            this.setCanFaceAnyDirection(idx, canFace);
+        }
+        return this;
+    }
+    public Tile setCanOnlyFace(int[] tileIdxArr){
+        return this.setCanOnlyFace(tileIdxArr, true);
+    }
+    public Tile setOnlyCantFace(int[] tileIdxArr){
+        this.setCanFaceAnything(true);
+        for(int idx: tileIdxArr){
+            this.setCanFaceAnyDirection(idx, false);
+        }
+        return this;
+    }
+
+
+
+    /**
+     * check if we have a valid tile index
+     * @param tileIdx : tile index to check
+     * @return : true if valid otherwise false
+     */
+    public static boolean validTileIndex(int tileIdx){
+        return (tileIdx > -1 && tileIdx < Lib.TILE_COUNT);
+    }
+    // override this when you wanna change the colour of first shape
+    protected Color getColor(){
+        return Lib.DEFAULT_SHAPE_FILL_COLOR;
+    }
+    protected Tile setBasicSquareTile(){
+        this.shapeList = new Shape[MAX_SHAPES];
+        // setup a basic shape for handling stuff
+        this.shapeList[0] = new Shape().addPoint(0,0)
+                .addPoint(100,0)
+                .addPoint(100,100)
+                .addPoint(0,100)
+                .setFill(this.getColor());
+        return this;
+    }
 
 }
+

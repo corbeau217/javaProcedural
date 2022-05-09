@@ -15,7 +15,7 @@ public class Lib {
     public static final Color DEFAULT_SHAPE_DRAW_COLOR = Color.black;
 
     // tile variables
-    public static final int TILE_COUNT = 5;
+    public static final int TILE_COUNT = 7;
 
     // basic error color for if there's any issues
     public static final Color ERROR_COLOR = Color.green;
@@ -29,7 +29,9 @@ public class Lib {
     protected static int ERROR_TILE_IDX = 0;
     // TODO: change this to it's own seperate variable because otherwise
     //          it might be chosen at random
-
+    public static Tile errorTile(){
+        return new ErrorTile();
+    }
     // --------------------------------------------------
     // --------------------------------------------------
     // ----- Lib methods after here
@@ -53,15 +55,13 @@ public class Lib {
          *       etc
          */
         int idx = 0;
-        Shape temp;
-
-        // bc we're lazy at making tiles rn
-        for(int i = 0; i < Lib.TILE_COUNT; i++){
-            // set the first shape in every tile to a square so we at least have something
-            Lib.TILE_OPTIONS[i].shapeList[0] = ShapeSpewer.spewSquare();
-        }
-        // set first tile to be the error tile.
-        Lib.TILE_OPTIONS[0].shapeList[0].setFill(Lib.ERROR_COLOR);
+        Lib.TILE_OPTIONS[idx++] = new SandTile();
+        Lib.TILE_OPTIONS[idx++] = new WaterTile();
+        Lib.TILE_OPTIONS[idx++] = new DeepWaterTile();
+        Lib.TILE_OPTIONS[idx++] = new GrassTile();
+        Lib.TILE_OPTIONS[idx++] = new RockTile();
+        Lib.TILE_OPTIONS[idx++] = new GravelTile();
+        Lib.TILE_OPTIONS[idx++] = new TreeTile();
 
     }
 
@@ -84,6 +84,16 @@ public class Lib {
             if(TILE_OPTIONS[i] == possibility) return i;
         }
         // otherwise we failed
+        return -1;
+    }
+    public static int getTileIndex(String tileName){
+        for(int i = 0; i < TILE_COUNT; i++){
+            // check we have the same name
+            if(TILE_OPTIONS[i].getTileName().compareTo(tileName)==0){
+                return i;
+            }
+        }
+        // otherwise we didnt find
         return -1;
     }
 }

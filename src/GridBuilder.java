@@ -306,7 +306,7 @@ public class GridBuilder {
             // to avoid repeated code, have them fetch the resulting
             //      index in their respective ways, than handle that
             // default to error tile idx for debugging
-            int finalIdx = Lib.ERROR_TILE_IDX;
+            int finalIdx = -1;
 
             // check for 1 options
             if(this.optionsCount==1){
@@ -339,6 +339,10 @@ public class GridBuilder {
             // TODO LATER : have a handle for if there was an error and we
             //          end up with no options left, we wipe all adjacent
             //          tiles and rebuild them so as to avoid the error
+            if(finalIdx==-1){
+                System.err.println("Failed to get a finalIdx in GridBuilder.collapse()");
+                return;
+            }
 
             // ---------------------------------
             // now cleanup our variables
