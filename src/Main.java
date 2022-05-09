@@ -54,6 +54,9 @@ class Main extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
+        // construct Lib
+        Lib.libMain();
+
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         File cour = new File("data/cour.ttf");
         ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, cour));

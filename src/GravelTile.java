@@ -13,9 +13,9 @@ public class GravelTile extends Tile {
     }
     @Override
     protected Tile setupAdjacency(){
-        String[] cantFaceTiles = {
-                WaterTile.tileInstanceName,
-                DeepWaterTile.tileInstanceName
+        int[] cantFaceTiles = {
+                Lib.WATER_IDX,
+                Lib.DEEPWATER_IDX
         };
         return this.setOnlyCantFace(cantFaceTiles);
     }

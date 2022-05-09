@@ -2,6 +2,15 @@ import java.awt.*;
 import java.util.Random;
 
 public class Lib {
+
+    public static final int SAND_IDX = 0;
+    public static final int WATER_IDX = 1;
+    public static final int DEEPWATER_IDX = 2;
+    public static final int GRASS_IDX = 3;
+    public static final int ROCK_IDX = 4;
+    public static final int GRAVEL_IDX = 5;
+    public static final int TREE_IDX = 6;
+
     // our random seeder
     public static Random seed = new Random();
 
@@ -54,14 +63,13 @@ public class Lib {
          *       to do, just use the Shape.addPoint().addPoint().setOutline()
          *       etc
          */
-        int idx = 0;
-        Lib.TILE_OPTIONS[idx++] = new SandTile();
-        Lib.TILE_OPTIONS[idx++] = new WaterTile();
-        Lib.TILE_OPTIONS[idx++] = new DeepWaterTile();
-        Lib.TILE_OPTIONS[idx++] = new GrassTile();
-        Lib.TILE_OPTIONS[idx++] = new RockTile();
-        Lib.TILE_OPTIONS[idx++] = new GravelTile();
-        Lib.TILE_OPTIONS[idx++] = new TreeTile();
+        Lib.TILE_OPTIONS[SAND_IDX]      = new SandTile();
+        Lib.TILE_OPTIONS[WATER_IDX]     = new WaterTile();
+        Lib.TILE_OPTIONS[DEEPWATER_IDX] = new DeepWaterTile();
+        Lib.TILE_OPTIONS[GRASS_IDX]     = new GrassTile();
+        Lib.TILE_OPTIONS[ROCK_IDX]      = new RockTile();
+        Lib.TILE_OPTIONS[GRAVEL_IDX]    = new GravelTile();
+        Lib.TILE_OPTIONS[TREE_IDX]      = new TreeTile();
 
     }
 

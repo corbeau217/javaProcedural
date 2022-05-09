@@ -13,10 +13,10 @@ public class DeepWaterTile extends Tile{
     }
     @Override
     protected Tile setupAdjacency(){
-        String[] canFaceTiles = {
-                tileInstanceName,
-                WaterTile.tileInstanceName,
-                RockTile.tileInstanceName
+        int[] canFaceTiles = {
+                Lib.DEEPWATER_IDX,
+                Lib.WATER_IDX,
+                Lib.ROCK_IDX
         };
         return this.setCanOnlyFace(canFaceTiles);
     }

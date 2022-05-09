@@ -13,8 +13,8 @@ return new Color(90,85,85);
     }
     @Override
     protected Tile setupAdjacency(){
-        String[] cantFaceTiles = {
-                TreeTile.tileInstanceName
+        int[] cantFaceTiles = {
+                Lib.TREE_IDX
         };
         return this.setOnlyCantFace(cantFaceTiles);
     }

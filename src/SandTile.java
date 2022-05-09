@@ -13,9 +13,9 @@ public class SandTile extends Tile{
     }
     @Override
     protected Tile setupAdjacency(){
-        String[] cantFaceTiles = {
-                TreeTile.tileInstanceName,
-                DeepWaterTile.tileInstanceName
+        int[] cantFaceTiles = {
+                Lib.TREE_IDX,
+                Lib.DEEPWATER_IDX
         };
         return this.setOnlyCantFace(cantFaceTiles);
     }

@@ -261,6 +261,11 @@ public class GridBuilder {
      */
     public static void emptyAbstraction(){
         abstractGrid = new TileNode[gridWidth][gridHeight];
+        for(int x = 0; x < gridWidth; x++){
+            for(int y = 0; y < gridHeight; y++){
+                abstractGrid[x][y] = new TileNode();
+            }
+        }
     }
 
 

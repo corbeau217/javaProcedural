@@ -15,8 +15,6 @@ class Stage {
         // then get our grid instance
         grid = Grid.getInstance();
 
-        // construct Lib
-        Lib.libMain();
 
         // proclaim our seed
         System.out.println("Using seed: "+Lib.getSeed());

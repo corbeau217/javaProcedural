@@ -13,10 +13,10 @@ public class TreeTile extends Tile{
     }
     @Override
     protected Tile setupAdjacency(){
-        String[] canFaceTiles = {
-                TreeTile.tileInstanceName,
-                GrassTile.tileInstanceName,
-                GravelTile.tileInstanceName
+        int[] canFaceTiles = {
+                Lib.TREE_IDX,
+                Lib.GRASS_IDX,
+                Lib.GRAVEL_IDX
         };
         return this.setCanOnlyFace(canFaceTiles);
     }
