@@ -13,6 +13,10 @@ public class ErrorTile extends Tile{
                 .setupAdjacency();
     }
     @Override
+    protected Tile setupShape(){
+        return this.makeCheckerTile(this.getColor(),Color.darkGray);
+    }
+    @Override
     protected Color getColor(){
         return Lib.ERROR_COLOR;
     }

@@ -5,7 +5,15 @@ public class GravelTile extends Tile {
     public GravelTile(){
         super();
         this.setName(tileInstanceName)
+                .setupShape()
                 .setupAdjacency();
+    }
+    @Override
+    protected Tile setupShape(){
+        Color color1 = new Color(126,117,105);
+        Color color2 = new Color(200,192,159);
+        this.shapeList = Shape.getNoisyShape(color1,color2);
+        return this;
     }
     @Override
     protected Color getColor(){

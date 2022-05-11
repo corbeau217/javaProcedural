@@ -15,8 +15,7 @@ public class DeepWaterTile extends Tile{
     protected Tile setupAdjacency(){
         int[] canFaceTiles = {
                 Lib.DEEPWATER_IDX,
-                Lib.WATER_IDX,
-                Lib.ROCK_IDX
+                Lib.WATER_IDX
         };
         return this.setCanOnlyFace(canFaceTiles);
     }

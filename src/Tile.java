@@ -32,7 +32,7 @@ public class Tile {
     boolean[][] allowedAdjacency;
 
     // max shape constant
-    final int MAX_SHAPES = 16;
+    final int MAX_SHAPES = Lib.MAX_TILE_SHAPES;
 
     // constructor
     public Tile(){
@@ -42,6 +42,7 @@ public class Tile {
         allowedAdjacency = new boolean[8][Lib.TILE_COUNT];
         // setup a basic shape for handling stuff
         this.setBasicSquareTile()
+                .setupShape()
                 .setupAdjacency()
                 .setName(Tile.tileInstanceName);
     }
@@ -112,6 +113,15 @@ public class Tile {
      */
     public boolean canFaceTileInDirection(int tileIdx, int dirIdx){
         return allowedAdjacency[dirIdx][tileIdx];
+    }
+
+    /**
+     * used for setting up the shape if it's different to the standard
+     *      square shape
+     * @return : reference to this for builder
+     */
+    protected Tile setupShape(){
+        return this;
     }
 
     protected Tile setupAdjacency(){
@@ -213,13 +223,22 @@ public class Tile {
     protected Tile setBasicSquareTile(){
         this.shapeList = new Shape[MAX_SHAPES];
         // setup a basic shape for handling stuff
-        this.shapeList[0] = new Shape().addPoint(0,0)
-                .addPoint(100,0)
-                .addPoint(100,100)
-                .addPoint(0,100)
-                .setFill(this.getColor());
+        this.shapeList[0] = Shape.getBasicSquare(this.getColor());
         return this;
     }
 
+    /**
+     * this method just makes the tile a checker tile
+     * @return : reference to this for builder pattern
+     */
+    protected Tile makeCheckerTile(Color color1, Color color2){
+        // check if we have the space in our shape list
+        if(this.shapeList.length >= 2){
+            // setup the first shape as the color1 square
+            this.shapeList[0] = Shape.getBasicSquare(color1);
+            this.shapeList[1] = Shape.getCheckerOverlay(color2);
+        }
+        return this;
+    }
 }
 

@@ -27,8 +27,9 @@ public class Lib {
     public static final int TILE_COUNT = 7;
 
     // basic error color for if there's any issues
-    public static final Color ERROR_COLOR = Color.green;
+    public static final Color ERROR_COLOR = Color.MAGENTA;
 
+    public static final int MAX_TILE_SHAPES = 16;
 
     // this is filled with the possible tiles this cell can take
     protected static Tile[] TILE_OPTIONS = new Tile[Lib.TILE_COUNT];
@@ -79,6 +80,23 @@ public class Lib {
      */
     public static int getSeed(){
         return Lib.seed.hashCode();
+    }
+
+    /**
+     * used for randomising that isn't tied to generation
+     * @return : the random object
+     */
+    public static Random getRandom(){
+        return new Random();
+    }
+
+    /**
+     * used for getting a random object by seed
+     * @param randSeed : the long variable of the seed
+     * @return : random object
+     */
+    public static Random getRandom(long randSeed){
+        return new Random(randSeed);
     }
 
     /**
