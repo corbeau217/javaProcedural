@@ -206,7 +206,18 @@ public class Tile {
         return this;
     }
 
-
+    // TODO : currently this will brick in corners of L shapes.
+    //          need to have GridBuilder ask our Tile if it likes
+    //          another Tile in dirIdx from it
+    public Tile setCanFaceDiagonally(int[] tileIdxArr, boolean canFace){
+        for(int tileIdx : tileIdxArr){
+            this.setCanFace(tileIdx, 1, canFace);
+            this.setCanFace(tileIdx, 3, canFace);
+            this.setCanFace(tileIdx, 5, canFace);
+            this.setCanFace(tileIdx, 7, canFace);
+        }
+        return this;
+    }
 
     /**
      * check if we have a valid tile index
