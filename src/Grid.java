@@ -39,13 +39,15 @@ class Grid implements Iterable<Cell> {
         // make sure we caught a big one
         if(builtGrid != null){
             // now run through and attempt to build our grid
-            for (int x = 0; x < cells.length; x++){
-                for(int y = 0; y < cells.length; y++){
+            for (int x = 0; x < colCount; x++){
+                for(int y = 0; y < rowCount; y++){
                     // get index from our builtGrid
                     int idx = builtGrid[x][y];
-
-                    // hand it off to our cell
-                    cells[x][y].setTile(Lib.TILE_OPTIONS[idx]);
+                    // handle error tile
+                    if(idx == -1)
+                        cells[x][y].setTile(Lib.errorTile());
+                    else // otherwise handle tile option
+                        cells[x][y].setTile(Lib.TILE_OPTIONS[idx]);
 
                 }
             }

@@ -81,7 +81,7 @@ public class GridBuilder {
 
             // now pick a node to collapse
             int collapsingIndex;
-            collapsingIndex = Lib.seed.nextInt( lowestEntropyNodes.length+1);
+            collapsingIndex = Lib.seed.nextInt( lowestEntropyNodes.length);
 
             // now collapse it
             lowestEntropyNodes[collapsingIndex].collapse();
@@ -93,13 +93,18 @@ public class GridBuilder {
             // use it to get adjacency array for that node
             TileNode[] adjacencyArray = getAdjacencyArray(collapsedX, collapsedY);
 
+            // get the tileIdx we collapsed to
+            int tileIdx = lowestEntropyNodes[collapsingIndex].val;
+
             // loop through and propagate change, need to remove anything that
             //      doesnt like the collapsed tile next to it
-            for(int i = 0; i < adjacencyArray.length; i++){
+            for(int i = 0; i < adjacencyArray.length && tileIdx > -1; i++){
                 // start at the bottom, then orbit collapsed cell
                 TileNode currNode = adjacencyArray[(4+i)%8];
                 // checks what it can look at (starting looking up and orbiting clockwise)
-                if(currNode!=null) currNode.updateTileOptionsFacingTile(collapsingIndex,i);
+                // THIS IS WHERE WE GET ARRAY INDEX OUT OF BOUNDS ERROR
+
+                if(currNode!=null) currNode.updateTileOptionsFacingTile(tileIdx,i);
             }
 
             // now loop back to where we checked if there were still superpositions
@@ -110,7 +115,7 @@ public class GridBuilder {
         // looping through grid should be ended, we need to make int[][] table to
         //      return and use for building grid
 
-        return null;
+        return TileNode.getIntGrid(abstractGrid);
     }
 
     /**
@@ -280,6 +285,9 @@ public class GridBuilder {
      *          class
      */
     static class TileNode{
+        //TODO: have this as you add the x and y in the grid to the
+
+        
         // TODO : implement as after collapsing a TileNode,
         //          entropy is set to less than 1
         //          (need to check as this was a toss up between
@@ -300,6 +308,24 @@ public class GridBuilder {
             // setup options array
             tileOptions = new boolean[optionsCount];
             Arrays.fill(tileOptions, true);
+        }
+
+        /**
+         * takes the TileNode grid and returns an int grid
+         * @param inGrid
+         * @return : return converted grid
+         */
+        public static int[][] getIntGrid(TileNode[][] inGrid){
+            if(inGrid==null) return null;
+
+            // now setup an output grid
+            int[][] outGrid = new int[gridWidth][gridHeight];
+            for(int x = 0; x < gridWidth; x++){
+                for(int y = 0; y < gridHeight; y++){
+                    outGrid[x][y] = inGrid[x][y].val;
+                }
+            }
+            return outGrid;
         }
 
         /**
@@ -325,7 +351,7 @@ public class GridBuilder {
             }
             else { // right now else, tomorrow another if
                 // get a random k
-                int randomK = Lib.seed.nextInt(this.optionsCount+1);
+                int randomK = Lib.seed.nextInt(this.optionsCount);
                 // loop over tiles, keep track of positives to
                 //      find the right one
                 for(int idx = 0, k = 0; idx < Lib.TILE_COUNT; idx++){
