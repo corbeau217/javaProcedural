@@ -26,14 +26,15 @@ public class GravelTile extends Tile {
         // setup basic preferences
         int[] cantFaceTiles = {
                 Lib.WATER_IDX,
-                Lib.DEEPWATER_IDX
+                Lib.DEEPWATER_IDX,
+                Lib.TREE_IDX
         };
         this.setOnlyCantFace(cantFaceTiles);
         // now stop the diagonal stuff
         int[] cantDiagonallyFaceTiles = {
                 Lib.GRAVEL_IDX
         };
-        this.setCanFaceDiagonally(cantDiagonallyFaceTiles, false);
+        //this.setCanFaceDiagonally(cantDiagonallyFaceTiles, false);
 
         return this;
 

@@ -251,5 +251,44 @@ public class Tile {
         }
         return this;
     }
+
+    /**
+     * TODO: implement this to be used in deciding if a tile should be used
+     * @param currentCount : the current count of this tile in play
+     * @return : a percentage double of how likely it'll happen for rolling the dice
+     */
+    protected double getLikelyhood(int currentCount){
+        // since this is a stub we'll return 100.0 to say it's always likely
+        // but normally you'd say:
+        // our preferences
+        double minimChance = 5.0;
+        double maximChance = 71.0;
+        double preferredMaximPercent = 31.0;
+        return getLikelyhood(
+                minimChance,
+                maximChance,
+                preferredMaximPercent, currentCount);
+    }
+
+    /**
+     * weighted percent chance of this tile being chosen
+     * @param minim : minimum percent chance out of 100
+     * @param maxim : maximum percent chance out of 100
+     * @param overallPercent : target percentage of grid as this tile out of 100
+     * @param currCount : current count of
+     * @return
+     */
+    protected double getLikelyhood(double minim, double maxim,
+                                   double overallPercent, int currCount){
+        double differ = maxim-minim;
+        double currPercen = (currCount/(double)(Grid.colCount*Grid.rowCount));
+        double diffPercen = overallPercent/currPercen;
+
+        // return our weighted percentage
+        // TODO : currently not quite right and doesnt account for overspill.
+        //          this needs fixing
+        return minim+differ-(differ*diffPercen);
+
+    }
 }
 
