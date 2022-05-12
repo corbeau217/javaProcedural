@@ -12,6 +12,17 @@ import javax.swing.JPanel;
 
 class Main extends JFrame {
     // change this to a seed with an L at the end for specified scenery
+    /* nice seeds:
+        2838126829449490353L
+        -7305459388728664204L
+        -5718052279992843010L
+        -4585131374194083820L
+        1320L
+        3967829891372954228L
+     */
+    /* error seeds:
+        1300655506L
+     */
     public static long seedLong = 0;
 
     // our window setup variables
