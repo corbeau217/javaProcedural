@@ -21,7 +21,8 @@ public class SandTile extends Tile{
     protected Tile setupAdjacency(){
         int[] cantFaceTiles = {
                 Lib.DEEPWATER_IDX,
-                Lib.GRASSYGRASS_IDX
+                Lib.GRASSYGRASS_IDX,
+                Lib.TREE_IDX
         };
         return this.setOnlyCantFace(cantFaceTiles);
     }

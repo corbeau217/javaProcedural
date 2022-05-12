@@ -3,6 +3,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Lib {
+
+
+    // set this to false if you want less spam on startup
+    public static boolean TRACK_ENTROPY = false;
+
+    public static boolean TRACK_FAILED_ROLLS = false;
+
     //TODO : setup a checker for when tiles are used
 
     //TODO : have the program generate a 'long' variable to
@@ -34,6 +41,9 @@ public class Lib {
 
     public static boolean DRAWING_GRASSYGRASS = true;
     public static int GRASSYGRASS_IDX = getNextTileIdx(DRAWING_GRASSYGRASS);
+
+    public static boolean DRAWING_SANDYGRASS = true;
+    public static int SANDYGRASS_IDX = getNextTileIdx(DRAWING_SANDYGRASS);
 
     public static int getNextTileIdx(boolean enabledTile){
         if(enabledTile) {
@@ -105,6 +115,8 @@ public class Lib {
             tileOptions.add( new GravelTile() );
         if(Lib.DRAWING_GRASSYGRASS)
             tileOptions.add( new GrassyGrassTile() );
+        if(Lib.DRAWING_SANDYGRASS)
+            tileOptions.add( new SandyGrassTile() );
 
         int idx = 0;
         for(Tile t : tileOptions)

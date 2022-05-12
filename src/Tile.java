@@ -6,6 +6,8 @@ import java.util.Optional;
 
 
 /**
+ * TODO : change adjacency over to weightings
+ *
  * this is what the procedural thingy needs for painting
  *      and also handles the painting of it
  */
@@ -271,31 +273,40 @@ public class Tile {
         // since this is a stub we'll return 100.0 to say it's always likely
         // but normally you'd say:
         // our preferences
-        double minimChance = 100.0;
-        double maximChance = 100.0;
-        double preferredMaximPercent = 31.0;
+        double minimChance = 1.0;
+        double preferredMaximPercent = (Grid.colCount*Grid.rowCount)/((Lib.TILE_COUNT)*1.0);
+
         return getLikelyhood(
                 minimChance,
-                maximChance,
+                preferredMaximPercent,
                 preferredMaximPercent, currentCount);
     }
 
     /**
+     *
      * weighted percent chance of this tile being chosen
      * @param minim : minimum percent chance out of 100
      * @param maxim : maximum percent chance out of 100
      * @param overallPercent : target percentage of grid as this tile out of 100
      * @param currCount : current count of
-     * @return
+     * @return : likelyhood percentage out of 0 to 100
      */
     protected double getLikelyhood(double minim, double maxim,
                                    double overallPercent, int currCount){
-        double differ = (maxim > minim) ? maxim-minim : 0.0; // handle if more
-        double currPercen = (currCount/(double)(Grid.colCount*Grid.rowCount));
-        double differPercen = (overallPercent > currPercen) ?
-                overallPercent-currPercen : 0.0; // to handle when we have more
-
-        double likelyhood = minim + (differPercen*differ);
+        // difference in chance, tends towards 0
+        double diffBetweenMinMax = maxim-minim;
+        // total tiles in the grid
+        double gridTileCount = Grid.colCount*Grid.rowCount;
+        // current percentage of this tile in the grid
+        double currPercen = (currCount/gridTileCount)*100.0;
+        // target count of this tile in the grid
+        double targetCount = ((overallPercent/100.0)*gridTileCount);
+        // the percentage of overallPercent that this tile is in the grid
+        double percenOfTargetCount = (overallPercent > currPercen) ?
+                currCount/targetCount*100.0 : 100.0;
+        // the overall percentage of diffBetweenMinMax we want to keep
+        double keepingPercentOfDiff = diffBetweenMinMax - ((percenOfTargetCount/100.0)*(diffBetweenMinMax/100.0));
+        double likelyhood = minim + keepingPercentOfDiff;
         // return our weighted percentage
         return likelyhood;
 

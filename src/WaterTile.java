@@ -9,6 +9,19 @@ public class WaterTile extends Tile {
                 .setupAdjacency();
     }
     @Override
+    protected double getLikelyhood(int currentCount){
+        // since this is a stub we'll return 100.0 to say it's always likely
+        // but normally you'd say:
+        // our preferences
+        double minimChance = 0.5;
+        double preferredMaximPercent = 8.0;
+
+        return getLikelyhood(
+                minimChance,
+                preferredMaximPercent,
+                preferredMaximPercent, currentCount);
+    }
+    @Override
     protected Tile setupShape(){
         this.shapeList = new Shape[Lib.MAX_TILE_SHAPES];
         this.shapeList[0] = Shape.getBasicSquare(this.getColor());
@@ -50,7 +63,6 @@ public class WaterTile extends Tile {
                 Lib.TREE_IDX,
                 Lib.GRAVEL_IDX,
                 Lib.GRASSYGRASS_IDX,
-                Lib.GRASS_IDX
         };
         return this.setOnlyCantFace(cantFaceTiles);
     }

@@ -45,6 +45,7 @@ public class GridBuilder {
      */
 
 
+
     /**
      * abstracted grid to a 2d array of indexes
      *      where negatives are the entropy
@@ -55,6 +56,8 @@ public class GridBuilder {
     static int gridWidth;
     static int gridHeight;
     static int cellTotal;
+
+    static int[] tileCount;
 
 //    // used to indicate that a cell isnt setup yet
 //    static final int EMPTY_VAL = Lib.TILE_COUNT+1;
@@ -70,6 +73,8 @@ public class GridBuilder {
         gridWidth = Grid.colCount;
         gridHeight = Grid.rowCount;
         cellTotal = gridWidth*gridHeight;
+        tileCount = new int[Lib.TILE_COUNT];
+        Arrays.fill(tileCount, 0);
 
         // setup our abstractGrid array
         emptyAbstraction();
@@ -157,7 +162,6 @@ public class GridBuilder {
     static TileNode[] getLowestEntropyList(){
         // find lowest entropy
         int lowestEntropy = findLowestEntropy();
-
         // i know, i know.. we're repeating code and being clunky
         //      by constantly looping over the whole array to check
         //      this information, so later we need to make this a field
@@ -183,6 +187,11 @@ public class GridBuilder {
                 }
             }
         }
+
+        if(Lib.TRACK_ENTROPY) {
+            System.out.println("Lowest entropy: " + lowestEntropy + ", with "+ lowestEntropyNodes.length + " entries.");
+        }
+
         // done here, return
         return lowestEntropyNodes;
     }
@@ -343,10 +352,9 @@ public class GridBuilder {
             if(this.optionsCount==1){
                 // loop over our options
                 for(int idx = 0; idx < Lib.TILE_COUNT; idx++){
-                    if(tileOptions[idx]){
+                    if(tileOptions[idx])
                         // we have our option, set it to be
                         finalIdx = idx;
-                    }
                 }
             }
             else { // right now else, tomorrow another if
@@ -354,17 +362,26 @@ public class GridBuilder {
                 int randomK = Lib.seed.nextInt(this.optionsCount);
                 // loop over tiles, keep track of positives to
                 //      find the right one
-                for(int idx = 0, k = 0; idx < Lib.TILE_COUNT; idx++){
-                    if(tileOptions[idx]){
-                        // got a positive, check k
-                        if(k==randomK){
-                            finalIdx = idx;
-                            break; // done here
+                while(finalIdx == -1){
+                    // might brick our generation but try anyway
+                    for(int idx = 0, k = 0; idx < Lib.TILE_COUNT; idx++){
+                        if(tileOptions[idx]){
+                            // got a positive, check k
+                            if(k==randomK){
+                                double diceRoll = Lib.seed.nextInt(1000)/10.0;
+                                double likelyhood = Lib.TILE_OPTIONS[idx].getLikelyhood(GridBuilder.tileCount[idx]);
+                                if(diceRoll <= likelyhood)
+                                    finalIdx = idx;
+                                else if(Lib.TRACK_FAILED_ROLLS)
+                                        System.out.println("failed rolling '"+Lib.TILE_OPTIONS[idx].getTileName()+"' with roll: ["+diceRoll+"] as less than ["+likelyhood+"]");
+                                break; // done here
+                            }
+                            // ammend k since we havent found
+                            k++;
                         }
-                        // ammend k since we havent found
-                        k++;
                     }
                 }
+
             }
             // now we have index of what we're using, or we have error
             // TODO LATER : have a handle for if there was an error and we
@@ -374,6 +391,9 @@ public class GridBuilder {
                 System.err.println("Failed to get a finalIdx in GridBuilder.collapse()");
                 return;
             }
+            else
+                // update our counter for the current tile index
+                tileCount[finalIdx]+=1;
 
             // ---------------------------------
             // now cleanup our variables
