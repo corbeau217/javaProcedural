@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 class Main extends JFrame {
 
+    public static long seedLong = 0;
 
     // our window setup variables
     public final int START_WIDTH = /*width of cells*/Grid.cellSize*Grid.colCount + /*left and right margin*/Grid.horizMargin*2;

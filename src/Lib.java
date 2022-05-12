@@ -90,6 +90,7 @@ public class Lib {
      * this is called by Stage when we do their constructor
      */
     public static void libMain(){
+        Lib.setupSeed(Main.seedLong);
         Lib.constructTiles();
     }
 
@@ -128,7 +129,15 @@ public class Lib {
      * @return return our seed
      */
     public static long getSeed(){
-        return Lib.seed.hashCode();
+        return Main.seedLong;
+    }
+    public static void setupSeed(long inSeed){
+        if(inSeed == 0) {
+            Main.seedLong = new Random().nextLong();
+            Lib.seed = new Random(Main.seedLong);
+        }
+        else
+            Lib.seed = new Random(inSeed);
     }
 
     /**
