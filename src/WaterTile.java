@@ -15,7 +15,7 @@ public class WaterTile extends Tile {
     protected Tile setupAdjacency(){
         int[] cantFaceTiles = {
                 Lib.TREE_IDX,
-                Lib.GRAVEL_IDX,
+                //Lib.GRAVEL_IDX,
                 Lib.GRASS_IDX
         };
         return this.setOnlyCantFace(cantFaceTiles);

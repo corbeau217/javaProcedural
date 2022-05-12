@@ -16,7 +16,7 @@ public class GrassTile extends Tile{
         int[] cantFaceTiles = {
                 Lib.DEEPWATER_IDX,
                 Lib.WATER_IDX,
-                Lib.GRAVEL_IDX
+                //Lib.GRAVEL_IDX
         };
         return this.setOnlyCantFace(cantFaceTiles);
     }

@@ -2,14 +2,20 @@ import java.awt.*;
 import java.util.Random;
 
 public class Lib {
+    //TODO : setup a checker for when tiles are used
+
+    //TODO : have the program generate a 'long' variable to
+    //      use for the random seed and have it setup that
+    //      you can specify what the seed is to see if it behaves
+    //      differently each time etc
 
     public static final int SAND_IDX = 0;
     public static final int WATER_IDX = 1;
     public static final int DEEPWATER_IDX = 2;
     public static final int GRASS_IDX = 3;
     public static final int ROCK_IDX = 4;
-    public static final int GRAVEL_IDX = 5;
-    public static final int TREE_IDX = 6;
+    public static final int TREE_IDX = 5;
+    //public static final int GRAVEL_IDX = 6;
 
     // our random seeder
     public static Random seed = new Random();
@@ -24,7 +30,7 @@ public class Lib {
     public static final Color DEFAULT_SHAPE_DRAW_COLOR = Color.black;
 
     // tile variables
-    public static final int TILE_COUNT = 7;
+    public static final int TILE_COUNT = 6;
 
     // basic error color for if there's any issues
     public static final Color ERROR_COLOR = Color.MAGENTA;
@@ -69,7 +75,7 @@ public class Lib {
         Lib.TILE_OPTIONS[DEEPWATER_IDX] = new DeepWaterTile();
         Lib.TILE_OPTIONS[GRASS_IDX]     = new GrassTile();
         Lib.TILE_OPTIONS[ROCK_IDX]      = new RockTile();
-        Lib.TILE_OPTIONS[GRAVEL_IDX]    = new GravelTile();
+        //Lib.TILE_OPTIONS[GRAVEL_IDX]    = new GravelTile();
         Lib.TILE_OPTIONS[TREE_IDX]      = new TreeTile();
 
     }
@@ -78,7 +84,7 @@ public class Lib {
      * getting our seed
      * @return return our seed
      */
-    public static int getSeed(){
+    public static long getSeed(){
         return Lib.seed.hashCode();
     }
 

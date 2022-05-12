@@ -35,7 +35,7 @@ public class TreeTile extends Tile{
         int[] canFaceTiles = {
                 Lib.TREE_IDX,
                 Lib.GRASS_IDX,
-                Lib.GRAVEL_IDX
+                //Lib.GRAVEL_IDX
         };
         return this.setCanOnlyFace(canFaceTiles);
     }

@@ -15,7 +15,8 @@ return new Color(90,85,85);
     protected Tile setupAdjacency(){
         int[] cantFaceTiles = {
                 Lib.TREE_IDX,
-                Lib.DEEPWATER_IDX
+                Lib.DEEPWATER_IDX,
+                Lib.WATER_IDX
         };
         return this.setOnlyCantFace(cantFaceTiles);
     }
