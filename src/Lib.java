@@ -17,6 +17,9 @@ public class Lib {
     public static final int TREE_IDX = 5;
     //public static final int GRAVEL_IDX = 6;
 
+    // tile variables
+    public static final int TILE_COUNT = 6;
+
     // our random seeder
     public static Random seed = new Random();
 
@@ -29,8 +32,6 @@ public class Lib {
     public static final Color DEFAULT_SHAPE_FILL_COLOR = Color.white;
     public static final Color DEFAULT_SHAPE_DRAW_COLOR = Color.black;
 
-    // tile variables
-    public static final int TILE_COUNT = 6;
 
     // basic error color for if there's any issues
     public static final Color ERROR_COLOR = Color.MAGENTA;
@@ -40,11 +41,6 @@ public class Lib {
     // this is filled with the possible tiles this cell can take
     protected static Tile[] TILE_OPTIONS = new Tile[Lib.TILE_COUNT];
 
-    // this will be the index of our error tile, have it as 0 until
-    //      since it's easier
-    protected static int ERROR_TILE_IDX = 0;
-    // TODO: change this to it's own seperate variable because otherwise
-    //          it might be chosen at random
     public static Tile errorTile(){
         return new ErrorTile();
     }
@@ -63,21 +59,13 @@ public class Lib {
      * this sets up our TILE_OPTIONS
      */
     private static void constructTiles() {
-
-        /**
-         * TODO: setup our tiles, the Shape class has a
-         *       builder pattern so it should be super easy
-         *       to do, just use the Shape.addPoint().addPoint().setOutline()
-         *       etc
-         */
         Lib.TILE_OPTIONS[SAND_IDX]      = new SandTile();
         Lib.TILE_OPTIONS[WATER_IDX]     = new WaterTile();
         Lib.TILE_OPTIONS[DEEPWATER_IDX] = new DeepWaterTile();
         Lib.TILE_OPTIONS[GRASS_IDX]     = new GrassTile();
         Lib.TILE_OPTIONS[ROCK_IDX]      = new RockTile();
-        //Lib.TILE_OPTIONS[GRAVEL_IDX]    = new GravelTile();
         Lib.TILE_OPTIONS[TREE_IDX]      = new TreeTile();
-
+        //Lib.TILE_OPTIONS[GRAVEL_IDX]    = new GravelTile();
     }
 
     /**
