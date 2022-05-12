@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 class Main extends JFrame {
-
+    // change this to a seed with an L at the end for specified scenery
     public static long seedLong = 0;
 
     // our window setup variables
