@@ -70,7 +70,7 @@ public class GrassyGrassTile extends Tile{
     }
     @Override
     protected Color getColor(){
-        return new Color(255,233,117);
+        return new Color(75,139,59);
     }
     @Override
     protected Tile setupAdjacency(){

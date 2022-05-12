@@ -23,11 +23,12 @@ public class SandyGrassTile extends Tile{
     }
     @Override
     protected Tile setupShape(){
+        Color grass = new GrassTile().getColor();
         int darkerBy = 35;
         Color darkerColor = new Color(
-                this.getColor().getRed()-darkerBy,
-                this.getColor().getGreen()-darkerBy,
-                this.getColor().getBlue()-darkerBy
+                grass.getRed()-darkerBy,
+                grass.getGreen()-darkerBy,
+                grass.getBlue()-darkerBy
         );
         int idx = 1;
         int xOffset = 20;
@@ -37,7 +38,7 @@ public class SandyGrassTile extends Tile{
                 .addPoint(xOffset+5,yOffset+0)
                 .addPoint(xOffset+10,yOffset+20)
                 .setOutline(darkerColor)
-                .setFill(this.getColor());
+                .setFill(grass);
         xOffset = 60;
         yOffset = 15;
         shapeList[idx++] = new Shape()
@@ -45,7 +46,7 @@ public class SandyGrassTile extends Tile{
                 .addPoint(xOffset+5,yOffset+0)
                 .addPoint(xOffset+10,yOffset+20)
                 .setOutline(darkerColor)
-                .setFill(this.getColor());
+                .setFill(grass);
         xOffset = 30;
         yOffset = 40;
         shapeList[idx++] = new Shape()
@@ -53,7 +54,7 @@ public class SandyGrassTile extends Tile{
                 .addPoint(xOffset+5,yOffset+0)
                 .addPoint(xOffset+10,yOffset+20)
                 .setOutline(darkerColor)
-                .setFill(this.getColor());
+                .setFill(grass);
         xOffset = 72;
         yOffset = 50;
         shapeList[idx++] = new Shape()
@@ -61,7 +62,7 @@ public class SandyGrassTile extends Tile{
                 .addPoint(xOffset+5,yOffset+0)
                 .addPoint(xOffset+10,yOffset+20)
                 .setOutline(darkerColor)
-                .setFill(this.getColor());
+                .setFill(grass);
         xOffset = 10;
         yOffset = 68;
         shapeList[idx++] = new Shape()
@@ -69,7 +70,7 @@ public class SandyGrassTile extends Tile{
                 .addPoint(xOffset+5,yOffset+0)
                 .addPoint(xOffset+10,yOffset+20)
                 .setOutline(darkerColor)
-                .setFill(this.getColor());
+                .setFill(grass);
         xOffset = 75;
         yOffset = 72;
         shapeList[idx++] = new Shape()
@@ -77,12 +78,12 @@ public class SandyGrassTile extends Tile{
                 .addPoint(xOffset+5,yOffset+0)
                 .addPoint(xOffset+10,yOffset+20)
                 .setOutline(darkerColor)
-                .setFill(this.getColor());
+                .setFill(grass);
         return this;
     }
     @Override
     protected Color getColor(){
-        return new Color(75,139,59);
+        return new Color(255,233,117);
     }
     @Override
     protected Tile setupAdjacency(){

@@ -42,7 +42,7 @@ public class Lib {
     public static boolean DRAWING_GRASSYGRASS = true;
     public static int GRASSYGRASS_IDX = getNextTileIdx(DRAWING_GRASSYGRASS);
 
-    public static boolean DRAWING_SANDYGRASS = true;
+    public static boolean DRAWING_SANDYGRASS = false;
     public static int SANDYGRASS_IDX = getNextTileIdx(DRAWING_SANDYGRASS);
 
     public static int getNextTileIdx(boolean enabledTile){
