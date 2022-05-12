@@ -206,6 +206,16 @@ public class Tile {
         return this;
     }
 
+    /**
+     * currently not needed because we just ignore invalid indices
+     * @param tileIdxArr : a
+     * @return : a
+     */
+    public Tile setOnlyCantFace(List<Integer> tileIdxArr){
+        //TODO
+        return this;
+    }
+
     // TODO : currently this will brick in corners of L shapes.
     //          need to have GridBuilder ask our Tile if it likes
     //          another Tile in dirIdx from it
@@ -261,8 +271,8 @@ public class Tile {
         // since this is a stub we'll return 100.0 to say it's always likely
         // but normally you'd say:
         // our preferences
-        double minimChance = 5.0;
-        double maximChance = 71.0;
+        double minimChance = 100.0;
+        double maximChance = 100.0;
         double preferredMaximPercent = 31.0;
         return getLikelyhood(
                 minimChance,
@@ -280,14 +290,14 @@ public class Tile {
      */
     protected double getLikelyhood(double minim, double maxim,
                                    double overallPercent, int currCount){
-        double differ = maxim-minim;
+        double differ = (maxim > minim) ? maxim-minim : 0.0; // handle if more
         double currPercen = (currCount/(double)(Grid.colCount*Grid.rowCount));
-        double diffPercen = overallPercent/currPercen;
+        double differPercen = (overallPercent > currPercen) ?
+                overallPercent-currPercen : 0.0; // to handle when we have more
 
+        double likelyhood = minim + (differPercen*differ);
         // return our weighted percentage
-        // TODO : currently not quite right and doesnt account for overspill.
-        //          this needs fixing
-        return minim+differ-(differ*diffPercen);
+        return likelyhood;
 
     }
 }

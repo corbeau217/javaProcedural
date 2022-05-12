@@ -5,7 +5,40 @@ public class DeepWaterTile extends Tile{
     public DeepWaterTile(){
         super();
         this.setName(tileInstanceName)
+                .setupShape()
                 .setupAdjacency();
+    }
+    @Override
+    protected Tile setupShape(){
+        this.shapeList = new Shape[Lib.MAX_TILE_SHAPES];
+        this.shapeList[0] = Shape.getBasicSquare(this.getColor());
+        // add in wavey lines
+        int darkerBy = 50;
+        for(int i = 0; i < 4; i++){
+            this.shapeList[i+1] = new Shape()
+                    .addPoint(10,20+20*i)
+                    .addPoint(30,10+20*i)
+                    .addPoint(70,30+20*i)
+                    .addPoint(90,20+20*i)
+                    //flip back
+                    .addPoint(70,30+20*i)
+                    .addPoint(30,10+20*i)
+                    .setFill(
+                            new Color(
+                                    this.getColor().getRed(),
+                                    this.getColor().getGreen()-darkerBy,
+                                    this.getColor().getBlue()-darkerBy
+                            )
+                    )
+                    .setOutline(
+                            new Color(
+                                    this.getColor().getRed(),
+                                    this.getColor().getGreen()-darkerBy,
+                                    this.getColor().getBlue()-darkerBy
+                            )
+                    );
+        }
+        return this;
     }
     @Override
     protected Color getColor(){
@@ -13,10 +46,13 @@ public class DeepWaterTile extends Tile{
     }
     @Override
     protected Tile setupAdjacency(){
-        int[] canFaceTiles = {
-                Lib.DEEPWATER_IDX,
-                Lib.WATER_IDX
+        int[] cantFaceTiles = {
+                Lib.SAND_IDX,
+                Lib.GRASS_IDX,
+                Lib.TREE_IDX,
+                Lib.GRASSYGRASS_IDX,
+                Lib.GRAVEL_IDX
         };
-        return this.setCanOnlyFace(canFaceTiles);
+        return this.setOnlyCantFace(cantFaceTiles);
     }
 }

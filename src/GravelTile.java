@@ -29,14 +29,7 @@ public class GravelTile extends Tile {
                 Lib.DEEPWATER_IDX,
                 Lib.TREE_IDX
         };
-        this.setOnlyCantFace(cantFaceTiles);
-        // now stop the diagonal stuff
-//        int[] cantDiagonallyFaceTiles = {
-//                Lib.GRAVEL_IDX
-//        };
-        //this.setCanFaceDiagonally(cantDiagonallyFaceTiles, false);
-
-        return this;
+        return this.setOnlyCantFace(cantFaceTiles);
 
     }
 }

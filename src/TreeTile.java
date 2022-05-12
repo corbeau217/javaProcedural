@@ -12,7 +12,12 @@ public class TreeTile extends Tile{
     @Override
     protected Tile setupShape(){
         // make the base as grass
-        shapeList[0] = Shape.getBasicSquare(Lib.TILE_OPTIONS[Lib.GRASS_IDX].getColor());
+        Color bgColor;
+        if(Lib.DRAWING_GRASS)
+            bgColor = new GrassTile().shapeList[0].fill;
+        else
+            bgColor = getColor();
+        shapeList[0] = Shape.getBasicSquare(bgColor);
         int[][] treePoints = getTreePoints();
         shapeList[1] = new Shape();
         shapeList[2] = new Shape();
@@ -32,12 +37,13 @@ public class TreeTile extends Tile{
     }
     @Override
     protected Tile setupAdjacency(){
-        int[] canFaceTiles = {
-                Lib.TREE_IDX,
-                Lib.GRASS_IDX,
-                //Lib.GRAVEL_IDX
+        // setup basic preferences
+        int[] cantFaceTiles = {
+                Lib.WATER_IDX,
+                Lib.DEEPWATER_IDX,
+                Lib.ROCK_IDX
         };
-        return this.setCanOnlyFace(canFaceTiles);
+        return this.setOnlyCantFace(cantFaceTiles);
     }
 
 

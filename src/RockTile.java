@@ -5,7 +5,13 @@ public class RockTile extends Tile{
     public RockTile(){
         super();
         this.setName(tileInstanceName)
+                .setupShape()
                 .setupAdjacency();
+    }
+    @Override
+    protected Tile setupShape(){
+        //TODO
+        return this;
     }
     @Override
     protected Color getColor(){

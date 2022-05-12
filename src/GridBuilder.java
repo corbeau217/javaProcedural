@@ -408,6 +408,7 @@ public class GridBuilder {
          *                  with 0 as up, and going clockwise
          */
         public void updateTileOptionsFacingTile(int tileIdx, int dirIdx){
+            if(!Tile.validTileIndex(tileIdx)) return;
             // loop through our tileOptions and check the current
             //      options for still being valid facing dirIdx with tileIdx
             //

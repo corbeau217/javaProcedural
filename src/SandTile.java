@@ -5,7 +5,13 @@ public class SandTile extends Tile{
     public SandTile(){
         super();
         this.setName(tileInstanceName)
+                .setupShape()
                 .setupAdjacency();
+    }
+    @Override
+    protected Tile setupShape(){
+        //TODO
+        return this;
     }
     @Override
     protected Color getColor(){
@@ -14,8 +20,8 @@ public class SandTile extends Tile{
     @Override
     protected Tile setupAdjacency(){
         int[] cantFaceTiles = {
-                Lib.TREE_IDX,
-                Lib.DEEPWATER_IDX
+                Lib.DEEPWATER_IDX,
+                Lib.GRASSYGRASS_IDX
         };
         return this.setOnlyCantFace(cantFaceTiles);
     }
