@@ -337,6 +337,9 @@ public class GridBuilder {
             return outGrid;
         }
 
+        //TODO: overload collaps with taking in the adjacent cells
+        //      and then handling the collapse
+
         /**
          * entry point for collapsing a tile during grid building
          *
@@ -444,6 +447,8 @@ public class GridBuilder {
                 }
             }
         }
+
+        //TODO : need method for updating tiles by taking in adjacent tile rulings
 
         /*
          * TODO : as per this youtube video - https://www.youtube.com/watch?v=2SuvO4Gi7uY

@@ -79,6 +79,8 @@ public class Lib {
     public static final int MAX_TILE_SHAPES = 16;
 
     // TODO: replace errorTile with DirtTile
+
+    // TODO: overload with taking a list of adjacent tiles to determine what the tile will become
     public static Tile errorTile(){
         return new ErrorTile();
     }
